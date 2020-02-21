@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Tous les retards";
+}
+<link href="~/Content/retard.css" rel="stylesheet" />
+<h1>Drater</h1>
+
+
+<div class="row">
+    <div class="col s12">
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="text" id="autocomplete-input" class="autocomplete">
+                <label for="autocomplete-input">Autocomplete</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="vue__app" class="card__container">
+
+    <div v-for="retard in retards" class="card__retard">
+        <div class="card__header">
+            <img  alt="User profile" />
+            <h3>{{retard.titre}}</h3>
+            <span class=" text-darken-3 vote__value"></span>
+        </div>
+
+        <p>
+            {{retard.description}}
+
+        </p>
+        <div>
+
+
+            <span :click="updateVote(1,retard)" href="#"><i class="material-icons white-text text-darken-2 ToggleVoteUp">keyboard_arrow_up</i></span>
+            <span :click="updateVote(-1,retard)"><i class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    var app = new Vue({
+        el: '#vue__app',
+        data: {
+            retards: []
+        },
+        mounted() {
+            axios.get('Api/Retards')
+                .then(response => {
+                    // handle success
+                    console.log(response.data);
+                    this.retards = response.data.map(retard => {
+                        return Object.assign({}, retard, { connectedVote: 0 })
+                    });
+                    console.log("this.retards: ", this.retards)
+                })
+        },
+        methods: {
+            updateVote(isUpvote, retard) {
+                console.log("triggered")
+                axios.get(`/Home/Updatevote/${retard.id}/${isUpvote}`)
+                    .then(function (response) {
+                        updatedRetard = this.retards.find(dataRetard => {
+                            return dataRetard.id === retard.id
+                        })
+                        updatedRetard.connectedVote === isUpvote ? 0 : isUpvote
+                        console.log("updatedRetard", updatedRetard)
+                    })
+            }
+        }
+    })
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.autocomplete');
+        var instances = M.Autocomplete.init(elems);
+    });
+</script>
+

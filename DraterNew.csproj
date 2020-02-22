@@ -161,12 +161,17 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\API\RetardController.cs" />
+    <Compile Include="Controllers\ConnexionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Class\Classe.cs" />
+    <Compile Include="Models\Class\Eleve.cs" />
     <Compile Include="Models\Class\Retard.cs" />
     <Compile Include="Models\databaseConnexion.cs" />
+    <Compile Include="Models\Request\ClasseRequest.cs" />
+    <Compile Include="Models\Request\ConnexionRequest.cs" />
     <Compile Include="Models\Request\RetardRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -207,6 +212,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Connexion\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,10 +2,10 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3302
--- Généré le :  ven. 21 fév. 2020 à 20:57
+-- Hôte : 127.0.0.1:3308
+-- Généré le :  sam. 22 fév. 2020 à 13:28
 -- Version du serveur :  8.0.18
--- Version de PHP :  7.3.12
+-- Version de PHP :  7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,15 +25,53 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `classe`
+--
+
+DROP TABLE IF EXISTS `classe`;
+CREATE TABLE IF NOT EXISTS `classe` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Libelle` varchar(255) NOT NULL,
+  `promo` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `eleve`
+--
+
+DROP TABLE IF EXISTS `eleve`;
+CREATE TABLE IF NOT EXISTS `eleve` (
+  `Id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pseudo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `mail` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `mdp` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `IdClasse` bigint(20) NOT NULL,
+  `Photo_Profile` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `eleve`
+--
+
+INSERT INTO `eleve` (`Id`, `pseudo`, `mail`, `mdp`, `IdClasse`, `Photo_Profile`) VALUES
+(1, 'Clement', 'clement.moreau@epsi.fr', 'clement', 1, 'clement.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `retard`
 --
 
 DROP TABLE IF EXISTS `retard`;
 CREATE TABLE IF NOT EXISTS `retard` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `file` text COLLATE utf8_unicode_ci NOT NULL,
+  `titre` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `file` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

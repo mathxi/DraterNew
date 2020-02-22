@@ -20,7 +20,7 @@
 
     <div v-for="retard in retards" class="card__retard">
         <div class="card__header">
-            <img  alt="User profile" />
+            <img :src="retard.file"  alt="User profile" />
             <h3>{{retard.titre}}</h3>
             <span class=" text-darken-3 vote__value"></span>
         </div>
@@ -30,11 +30,8 @@
 
         </p>
         <div>
-
-
-            <span :click="updateVote(1,retard)" href="#"><i class="material-icons white-text text-darken-2 ToggleVoteUp">keyboard_arrow_up</i></span>
-            <span :click="updateVote(-1,retard)"><i class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
-
+            <span v-on:click="updateVote(1,retard)" href="#"><i class="material-icons white-text text-darken-2 ToggleVoteUp">keyboard_arrow_up</i></span>
+            <span v-on:click="updateVote(-1,retard)"><i class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
         </div>
     </div>
 </div>
@@ -61,9 +58,9 @@
                 })
         },
         methods: {
-            updateVote(isUpvote, retard) {
-                console.log("triggered")
-                axios.get(`/Home/Updatevote/${retard.id}/${isUpvote}`)
+            changeVote(isUpvote, retard) {
+                vote
+                axios.get(`/Api/vote/update/${retard.id}/${isUpvote}`)
                     .then(function (response) {
                         updatedRetard = this.retards.find(dataRetard => {
                             return dataRetard.id === retard.id

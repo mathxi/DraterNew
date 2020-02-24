@@ -17,5 +17,9 @@ namespace DraterNew.ViewModel
         {
 
         }
+        public EleveVM(Eleve eleve)
+        {
+            this.Eleve = eleve;
+        }
     }
 }

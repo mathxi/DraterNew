@@ -45,9 +45,8 @@ namespace DraterNew.Models.Request
 
                 // return list to be displayed
             }
-           
+
             return classe;
-            
         }
 
         public static List<Classe> GetAllClasses()
@@ -83,13 +82,9 @@ namespace DraterNew.Models.Request
 
                 // close Connection
                 connection.CloseConnection();
-
-
-                // return list to be displayed
             }
 
             return Listclasse;
-
         }
     }
 }

@@ -100,6 +100,37 @@ namespace DraterNew.Models.Request
             return eleve;
         }
 
+         /// <summary>
+        /// Méthode permettant la mise a jour d'une classe
+        /// </summary>
+        /// <param name="classe">Classe que l'on souhaite mettre a jour</param>
+        public static void Update(Classe classe)
+        {
+
+            string query = "Update Classe set Libelle = @libelle , promo = @promo WHERE Id = @id";
+
+
+            // Open connection
+            databaseConnexion connection = new databaseConnexion();
+            if (connection.OpenConnection() == true)
+            {
+                // Create Command
+                using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
+                {
+
+                    // shield sql injection
+                    cmd.Parameters.AddWithValue("@id", classe.id);
+                    cmd.Parameters.AddWithValue("@promo", classe.libelle);
+                    cmd.Parameters.AddWithValue("@mail", classe.promo);
+                    // close Connection
+
+                    int result = cmd.ExecuteNonQuery();
+                    connection.CloseConnection();
+
+                }
+            }
+        }
+
         /// <summary>
         /// Méthode permettant la création d'un éleve
         /// </summary>

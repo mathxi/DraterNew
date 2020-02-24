@@ -17,8 +17,8 @@
 </div>
 
 <div id="vue__app" class="card__container">
-
-    <div v-for="retard in retards" class="card__retard">
+    
+    <div v-if="!loading" v-for="retard in retards" class="card__retard">
         <div class="card__header">
             <img :src="retard.file"  alt="User profile" />
             <h3>{{retard.titre}}</h3>
@@ -34,6 +34,17 @@
             <span v-on:click="updateVote(-1,retard)"><i class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
         </div>
     </div>
+
+    <div v-if="loading" class="wrapper">
+        <div class="toiletroll">
+            <div class="roll"></div>
+            <div class="papers">
+                <div class="paper">Loading</div>
+                <div class="paper">Wait</div>
+                <div class="paper">Please</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
@@ -44,9 +55,11 @@
     var app = new Vue({
         el: '#vue__app',
         data: {
-            retards: []
+            retards: [],
+            loading: false,
         },
         mounted() {
+            this.loading = true
             axios.get('Api/Retards')
                 .then(response => {
                     // handle success
@@ -55,6 +68,7 @@
                         return Object.assign({}, retard, { connectedVote: 0 })
                     });
                     console.log("this.retards: ", this.retards)
+                    this.loading = false
                 })
         },
         methods: {

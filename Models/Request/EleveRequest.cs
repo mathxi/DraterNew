@@ -7,10 +7,10 @@ using System.Web;
 
 namespace DraterNew.Models.Request
 {
-    public class ConnexionRequest
+    public class EleveRequest
     {
 
-        public static Eleve ConnexionValide(string pseudo, string mdp)
+        public static Eleve GetEleveByPseudoAndMDP(string pseudo, string mdp)
         {
             Eleve eleve = null;
             string query = "SELECT * FROM Eleve where pseudo=@pseudo and mdp=@mdp;";
@@ -33,7 +33,7 @@ namespace DraterNew.Models.Request
                 // Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    eleve = new Eleve(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetInt64(4), dataReader.GetString(5));
+                    eleve = new Eleve(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3),dataReader.GetInt64(4), dataReader.GetString(5));
                 }
 
                 // close Data Reader
@@ -48,6 +48,35 @@ namespace DraterNew.Models.Request
            
                 return eleve;
             
+        }
+
+        public static void Create(Eleve eleve)
+        {
+            
+            string query = "INSERT INTO Eleve (pseudo, mail, mdp, IdClasse, Photo_Profile) VALUES(@pseudo, @mail, @mdp, @idClasse, @photo";
+
+
+            // Open connection
+            databaseConnexion connection = new databaseConnexion();
+            if (connection.OpenConnection() == true)
+            {
+                // Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection());
+
+                // shield sql injection
+                cmd.Parameters.AddWithValue("@pseudo", eleve.pseudo);
+                cmd.Parameters.AddWithValue("@mail", eleve.mail);
+                cmd.Parameters.AddWithValue("@mdp", eleve.MDP);
+                cmd.Parameters.AddWithValue("@idClasse", eleve.idClasse);
+                cmd.Parameters.AddWithValue("@photo", eleve.photo_profile);
+                // close Connection
+                connection.CloseConnection();
+
+
+            }
+
+            
+
         }
 
     }

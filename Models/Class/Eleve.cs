@@ -11,6 +11,7 @@ namespace DraterNew.Models.Class
         public long id { get; set; }
         public string pseudo { get; set; }
         public string mail { get; set; }
+        public string MDP { get; set; }
         public Classe idClasse { get; set; }
         public string photo_profile { get; set; }
 
@@ -18,11 +19,12 @@ namespace DraterNew.Models.Class
         {
 
         }
-        public Eleve(long id, string pseudo, string mail, long idClasse, string photo_profile)
+        public Eleve(long id, string pseudo, string mail, string mdp , long idClasse, string photo_profile)
         {
             this.id = id;
             this.pseudo = pseudo;
             this.mail = mail;
+            this.MDP = mdp;
             this.idClasse = ClasseRequest.GetClasse(idClasse);
             this.photo_profile = photo_profile;
         }

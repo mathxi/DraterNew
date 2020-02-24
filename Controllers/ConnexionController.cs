@@ -35,20 +35,26 @@ namespace DraterNew.Controllers
             Eleve eleve = null;
             if (Pseudo != null && MDP != null)
             {
-                eleve = ConnexionRequest.ConnexionValide(Pseudo, MDP);
-               if (eleve.id != null)
+                eleve = EleveRequest.GetEleveByPseudoAndMDP(Pseudo, MDP);
+                if (Convert.ToString(eleve.id) != null)
                 {
                     FormsAuthentication.SetAuthCookie(Convert.ToString(eleve.id), true);
+                    Session["EleveConnecte"] = eleve;
+
                     return RedirectToAction("Index", "Home");
                 }
-               
-                  
-
-                
             }
             ViewBag.ConnexionErreur = "Connexion echouée !";
 
             return View();
         }
+
+        public ActionResult Disconect()
+        {
+            FormsAuthentication.SignOut();
+            Session["EleveConnecte"] = null;
+            return RedirectToAction("Index", "Connexion");
+        }
     }
+  
 }

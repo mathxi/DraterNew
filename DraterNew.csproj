@@ -172,7 +172,7 @@
     <Compile Include="Models\Class\Retard.cs" />
     <Compile Include="Models\databaseConnexion.cs" />
     <Compile Include="Models\Request\ClasseRequest.cs" />
-    <Compile Include="Models\Request\ConnexionRequest.cs" />
+    <Compile Include="Models\Request\EleveRequest.cs" />
     <Compile Include="Models\Request\RetardRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -214,6 +214,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Connexion\Index.cshtml" />
+    <Content Include="Views\Eleve\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

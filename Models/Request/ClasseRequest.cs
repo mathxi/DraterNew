@@ -49,5 +49,47 @@ namespace DraterNew.Models.Request
             return classe;
             
         }
+
+        public static List<Classe> GetAllClasses()
+        {
+            List<Classe> Listclasse = new List<Classe>();
+            string query = "SELECT * FROM Classe;";
+
+
+            // Open connection
+            databaseConnexion connection = new databaseConnexion();
+            if (connection.OpenConnection() == true)
+            {
+                // Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection());
+
+                // shield sql injection
+
+                // Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                // Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    Classe classe = new Classe();
+                    classe.id = dataReader.GetInt32(0);
+                    classe.libelle = dataReader.GetString(1);
+                    classe.promo = dataReader.GetDateTime(2);
+                    Listclasse.Add(classe);
+                }
+
+                // close Data Reader
+                dataReader.Close();
+
+                // close Connection
+                connection.CloseConnection();
+
+
+                // return list to be displayed
+            }
+
+            return Listclasse;
+
+        }
     }
 }

@@ -36,16 +36,13 @@ namespace DraterNew.Controllers
             if (Pseudo != null && MDP != null)
             {
                 eleve = ConnexionRequest.ConnexionValide(Pseudo, MDP);
-               if (eleve.id != null)
+                if (eleve.id != null)
                 {
                     FormsAuthentication.SetAuthCookie(Convert.ToString(eleve.id), true);
                     return RedirectToAction("Index", "Home");
                 }
-               
-                  
-
-                
             }
+
             ViewBag.ConnexionErreur = "Connexion echouée !";
 
             return View();

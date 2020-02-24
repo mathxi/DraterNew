@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace DraterNew.Models.Request
 {
-    public class EleveRequest
+    public class EleveRequest 
     {
 
         public static Eleve GetEleveByPseudoAndMDP(string pseudo, string mdp)
@@ -51,11 +51,10 @@ namespace DraterNew.Models.Request
             
         }
 
-        public static void Create([Bind(Include = "id,titre,description,Retards_Tags,pj")] Eleve eleve)
+        public static void Create([Bind(Include = "id,titre,description,IdClasse,Photo_Profile")] Eleve eleve)
         {
-            if (ModelState)
-            {
-                string query = "INSERT INTO Eleve (pseudo, mail, mdp, IdClasse, Photo_Profile) VALUES(@pseudo, @mail, @mdp, @idClasse, @photo";
+
+            string query = "INSERT INTO eleve (Id, pseudo, mail, mdp, IdClasse, Photo_Profile) VALUES (null, @pseudo, @mail, @mdp, @idClasse, @photo)";
 
 
             // Open connection
@@ -69,11 +68,11 @@ namespace DraterNew.Models.Request
                 cmd.Parameters.AddWithValue("@pseudo", eleve.pseudo);
                 cmd.Parameters.AddWithValue("@mail", eleve.mail);
                 cmd.Parameters.AddWithValue("@mdp", eleve.MDP);
-                cmd.Parameters.AddWithValue("@idClasse", Int32.Parse( Request["Retards_Tags"]) );
+                cmd.Parameters.AddWithValue("@idClasse", eleve.idClasse.id);
                 cmd.Parameters.AddWithValue("@photo", eleve.photo_profile);
                 // close Connection
 
-                cmd.ExecuteReader();
+                int result = cmd.ExecuteNonQuery();
                 connection.CloseConnection();
 
 
@@ -86,4 +85,3 @@ namespace DraterNew.Models.Request
         }
 
     }
-}

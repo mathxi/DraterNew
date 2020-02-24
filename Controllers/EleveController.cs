@@ -23,10 +23,12 @@ namespace DraterNew.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Eleve/Create")]
-        public ActionResult Create([Bind(Include = "id,pseudo,mail,mdp,idClasse")] Eleve eleve)
+        public ActionResult Create([Bind(Include = "id,pseudo,mail,mdp,idClasse, Photo_Profile")] Eleve eleve)
         {
             if (ModelState.IsValid)
             {
+                eleve.idClasse = ClasseRequest.GetClasse(Int64.Parse(Request["Classe"]));
+                var resultat = Request["fileEnvoie"];
                 EleveRequest.Create(eleve);
                 return RedirectToAction("Home", "Index" );
             }

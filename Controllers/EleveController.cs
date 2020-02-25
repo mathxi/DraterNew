@@ -28,7 +28,6 @@ namespace DraterNew.Controllers
             if (ModelState.IsValid)
             {
                 eleve.idClasse = ClasseRequest.GetClasse(Int64.Parse(Request["Classe"]));
-                var resultat = Request["fileEnvoie"];
                 EleveRequest.Create(eleve);
                 return RedirectToAction("Home", "Index" );
             }

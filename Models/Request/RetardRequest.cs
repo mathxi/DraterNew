@@ -13,14 +13,13 @@ namespace DraterNew.Models.Request
 
         public static Retard getRetard(int idRetard)
         {
-            Retard retard = new Retard();
+            Retard retard;
             string query = "SELECT * FROM retard where id=@idRetard;";
 
 
             // Open connection
             databaseConnexion connection = new databaseConnexion();
             if (connection.OpenConnection() == true)
-
             {
                 // Create Command
                 MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection());
@@ -34,11 +33,7 @@ namespace DraterNew.Models.Request
                 // Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    retard.id = dataReader.GetInt32(0);
-                    retard.titre = dataReader.GetString(1);
-                    retard.description= dataReader.GetString(2);
-                    retard.file = dataReader.GetString(3);
-
+                    retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
 
                 }
 
@@ -49,12 +44,9 @@ namespace DraterNew.Models.Request
                 connection.CloseConnection();
 
                 // return list to be displayed
-                return retard;
+                
             }
-            else
-            {
-                return retard;
-            }
+            return retard;
         }
 
         /*
@@ -172,6 +164,7 @@ namespace DraterNew.Models.Request
             {
                 return retards;
             }
+
         }
 
     }

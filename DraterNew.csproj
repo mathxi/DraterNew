@@ -170,17 +170,24 @@
     <Compile Include="Controllers\ConnexionController.cs" />
     <Compile Include="Controllers\EleveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RetardController.cs" />
+    <Compile Include="Controllers\TagsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Class\Classe.cs" />
     <Compile Include="Models\Class\Eleve.cs" />
     <Compile Include="Models\Class\Retard.cs" />
+    <Compile Include="Models\Class\Retards_Tags.cs" />
+    <Compile Include="Models\Class\Tags.cs" />
     <Compile Include="Models\databaseConnexion.cs" />
     <Compile Include="Models\Request\ClasseRequest.cs" />
     <Compile Include="Models\Request\EleveRequest.cs" />
     <Compile Include="Models\Request\RetardRequest.cs" />
+    <Compile Include="Models\Request\TagsRequest.cs" />
+    <Compile Include="Models\Request\Tags_RetardRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CreateRetardsVM.cs" />
     <Compile Include="ViewModel\EleveVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -223,10 +230,13 @@
     <Content Include="Views\Connexion\Index.cshtml" />
     <Content Include="Views\Eleve\Create.cshtml" />
     <Content Include="Views\Eleve\Update.cshtml" />
+    <Content Include="Views\Retard\Create.cshtml" />
+    <Content Include="Views\Tags\Create.cshtml" />
+    <Content Include="Views\Retard\List.cshtml" />
+    <Content Include="Views\Retard\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Retard\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

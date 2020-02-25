@@ -30,7 +30,7 @@ namespace DraterNew.Controllers
                 eleve.idClasse = ClasseRequest.GetClasse(Int64.Parse(Request["Classe"]));
                 eleve.photo_profile = Request["fileEnvoie"];
                 EleveRequest.Create(eleve);
-                return RedirectToAction("Home", "Index" );
+                return RedirectToAction("Index", "Home" );
             }
 
             ViewBag.Classe = new SelectList(ClasseRequest.GetAllClasses(), "id", "libelle", eleve.idClasse);
@@ -70,7 +70,7 @@ namespace DraterNew.Controllers
         public ActionResult Delete(int id)
         {
             EleveRequest.Delete(id);
-            return RedirectToAction("Home", "Index");
+            return RedirectToAction("Index", "Home");
         }
 
 

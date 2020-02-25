@@ -50,6 +50,7 @@ namespace DraterNew.Controllers
             return View();
         }
 
+        [Route("Connexion/Logout")]
         public ActionResult Disconect()
         {
             FormsAuthentication.SignOut();

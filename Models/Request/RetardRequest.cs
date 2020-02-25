@@ -18,7 +18,7 @@ namespace DraterNew.Models.Request
         /// <returns>Retourne un retard.</returns>
         public static Retard getRetard(int idRetard)
         {
-            Retard retard = new Retard();
+            Retard retard;
             string query = "SELECT * FROM retard where id=@idRetard;";
 
             // Open connection
@@ -39,10 +39,8 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            retard.id = dataReader.GetInt32(0);
-                            retard.titre = dataReader.GetString(1);
-                            retard.description = dataReader.GetString(2);
-                            retard.file = dataReader.GetString(3);
+                            retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            return retard;
                         }
 
                         // close Data Reader
@@ -54,12 +52,9 @@ namespace DraterNew.Models.Request
                 }
 
                 // return list to be displayed
-                return retard;
             }
-            else
-            {
-                return retard;
-            }
+
+            return null;
         }
 
         /// <summary>
@@ -190,10 +185,8 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            retard.id = dataReader.GetInt32(0);
-                            retard.titre = dataReader.GetString(1);
-                            retard.description = dataReader.GetString(2);
-                            retard.file = dataReader.GetString(3);
+                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            retards.Add(retard);
                         }
 
                         // close Data Reader
@@ -211,6 +204,7 @@ namespace DraterNew.Models.Request
             {
                 return retard;
             }
+
         }
 
         /// <summary>

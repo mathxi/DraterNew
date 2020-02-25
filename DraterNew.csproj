@@ -166,7 +166,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\API\RetardController.cs" />
+    <Compile Include="Controllers\API\RetardAPIController.cs" />
+    <Compile Include="Controllers\API\VoteAPIController.cs" />
     <Compile Include="Controllers\ConnexionController.cs" />
     <Compile Include="Controllers\EleveController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Class\Vote.cs" />
     <Compile Include="Models\Class\Classe.cs" />
     <Compile Include="Models\Class\Eleve.cs" />
     <Compile Include="Models\Class\Retard.cs" />
@@ -184,8 +186,11 @@
     <Compile Include="Models\Request\ClasseRequest.cs" />
     <Compile Include="Models\Request\EleveRequest.cs" />
     <Compile Include="Models\Request\RetardRequest.cs" />
+
     <Compile Include="Models\Request\TagsRequest.cs" />
     <Compile Include="Models\Request\Tags_RetardRequest.cs" />
+    <Compile Include="Models\Request\VoteRequest.cs" />
+
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CreateRetardsVM.cs" />
     <Compile Include="ViewModel\EleveVM.cs" />

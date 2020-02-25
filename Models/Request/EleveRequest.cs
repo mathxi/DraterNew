@@ -139,7 +139,6 @@ namespace DraterNew.Models.Request
         {
 
             string query = "INSERT INTO eleve (Id, pseudo, mail, mdp, IdClasse, Photo_Profile) VALUES (null, @pseudo, @mail, @mdp, @idClasse, @photo)";
-
             // Open connection
             databaseConnexion connection = new databaseConnexion();
             if (connection.OpenConnection() == true)

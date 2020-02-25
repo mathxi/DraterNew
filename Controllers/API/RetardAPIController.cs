@@ -7,23 +7,20 @@ using DraterNew.Models.Request;
 
 namespace DraterNew.Controllers.API
 {
-    public class RetardController : Controller
+    public class RetardAPIController : Controller
     {
-        [Route("Api/Retard/{idRetard}")]
         [HttpGet]
+        [Route("Api/Retard/{idRetard}")]
         public ActionResult Retard(int idRetard)
         {
-
             return Json(RetardRequest.getRetard(idRetard), JsonRequestBehavior.AllowGet);
         }
 
-        [Route("Api/Retards")]
         [HttpGet]
-        public ActionResult Retards()
+        [Route("Api/Retards")]
+        public ActionResult getAllRetards()
         {
-
             return Json(RetardRequest.GetRetards(), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

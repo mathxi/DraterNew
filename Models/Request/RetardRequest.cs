@@ -37,12 +37,11 @@ namespace DraterNew.Models.Request
                     using (MySqlDataReader dataReader = cmd.ExecuteReader())
                     {
 
-                // Read the data and store them in the list
-                while (dataReader.Read())
-                {
-                    retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
-
-
+                        // Read the data and store them in the list
+                        while (dataReader.Read())
+                        {
+                            retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            return retard;
                         }
 
                         // close Data Reader
@@ -54,9 +53,9 @@ namespace DraterNew.Models.Request
                 }
 
                 // return list to be displayed
-                
             }
-            return retard;
+
+            return null;
         }
 
         /*
@@ -156,16 +155,8 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            Retard retard = new Retard();
-
-                            retard.id = dataReader.GetInt32(0);
-                            retard.titre = dataReader.GetString(1);
-                            retard.description = dataReader.GetString(2);
-                            retard.file = dataReader.GetString(3);
+                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
                             retards.Add(retard);
-
-
-
                         }
 
                         // close Data Reader

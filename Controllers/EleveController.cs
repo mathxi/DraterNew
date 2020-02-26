@@ -12,6 +12,7 @@ namespace DraterNew.Controllers
     [Authorize]
     public class EleveController : Controller
     {
+        [AllowAnonymous]
         // GET: Eleve
         [HttpGet]
         [Route("Eleve/Create")]
@@ -21,6 +22,7 @@ namespace DraterNew.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Eleve/Create")]
@@ -52,6 +54,8 @@ namespace DraterNew.Controllers
         [Route("Eleve/Stats")]
         public ActionResult Stats()
         {
+            ViewBag.Retard = new SelectList(RetardRequest.getRetardByEleve(Int32.Parse(User.Identity.Name)), "id", "titre");
+
             return View();
         }
 

@@ -3,54 +3,54 @@
 }
 <link href="~/Content/retard.css" rel="stylesheet" />
 
-<div class="row">
-    <div class="col s12">
-        <div class="row">
-            <div class="input-field col s12">
-                <input type="text" id="autocomplete-input" class="autocomplete">
-                <label for="autocomplete-input">Autocomplete</label>
-            </div>
+
+<div id="vue__app">
+    <div class="row">
+        <div class="input-field container">
+            <select v-on:change="updateRetards()" multiple ref="checkboxTag" v-model="selectedTags">
+                <option v-for="tag in tags" :value="tag.Id">{{tag.Libelle}}</option>
+            </select>
+            <label>Tags à filtrer</label>
         </div>
     </div>
-</div>
+    <div class="card__container">
 
-<div id="vue__app" class="card__container">
-    
-    <div v-if="!loading" v-for="retard in retards" class="card__retard">
-        <div class="card__header">
-            <img :src="retard.file" alt="User profile" />
-            <h3>{{retard.titre}}</h3>
-            <span v-if="!retard.loading" v-bind:class="{ 'red-text': retard.votes < 0,'green-text': retard.votes > 0}"  class="vote__value">{{retard.votes}}</span>
-            <div v-if="retard.loading" class="spinner-layer spinner-green">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div><div class="gap-patch">
-                    <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                    <div class="circle"></div>
+        <div v-if="!loading" v-for="retard in retards" class="card__retard">
+            <div class="card__header">
+                <img :src="retard.file" alt="User profile" />
+                <h3>{{retard.titre}}</h3>
+                <span v-if="!retard.loading" v-bind:class="{ 'red-text': retard.votes < 0,'green-text': retard.votes > 0}" class="vote__value">{{retard.votes}}</span>
+                <div v-if="retard.loading" class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
                 </div>
+
+
             </div>
 
+            <p>
+                {{retard.description}}
 
+            </p>
+            <div>
+                <span v-on:click="changeVote(retard,'up')" href="#"><i v-bind:class="{ 'ToggleVoteUp': retard.currentUserVote ===1,'green-text': retard.currentUserVote === 0}" class="material-icons text-darken-2">keyboard_arrow_up</i></span>
+                <span v-on:click="changeVote(retard,'down')"><i v-bind:class="{ 'ToogleVoteDown': retard.currentUserVote === -1,' red-text': retard.currentUserVote === 0}" class="material-icons text-darken-2">keyboard_arrow_down</i></span>
+            </div>
         </div>
 
-        <p>
-            {{retard.description}}
-
-        </p>
-        <div>
-            <span v-on:click="changeVote(retard,'up')" href="#"><i v-bind:class="{ 'ToggleVoteUp': retard.currentUserVote ===1,'green-text': retard.currentUserVote === 0}" class="material-icons text-darken-2">keyboard_arrow_up</i></span>
-            <span v-on:click="changeVote(retard,'down')"><i v-bind:class="{ 'ToogleVoteDown': retard.currentUserVote === -1,' red-text': retard.currentUserVote === 0}" class="material-icons text-darken-2">keyboard_arrow_down</i></span>
-        </div>
-    </div>
-
-    <div v-if="loading" class="wrapper">
-        <div class="toiletroll">
-            <div class="roll"></div>
-            <div class="papers">
-                <div class="paper">Loading</div>
-                <div class="paper">Wait</div>
-                <div class="paper">Please</div>
+        <div v-if="loading" class="wrapper">
+            <div class="toiletroll">
+                <div class="roll"></div>
+                <div class="papers">
+                    <div class="paper">Loading</div>
+                    <div class="paper">Wait</div>
+                    <div class="paper">Please</div>
+                </div>
             </div>
         </div>
     </div>
@@ -67,19 +67,18 @@
             connectedUser:@User.Identity.Name,
             retards: [],
             loading: false,
+            tags: [],
+            selectedTags:[]
         },
         mounted() {
             console.log("Connected: ",this.connectedUser)
-            this.loading = true
-            axios.get('Api/Retards')
+            this.updateRetards()
+            axios.get('/Api/Retard/getTags')
                 .then(response => {
                     // handle success
                     console.log(response.data);
-                    this.retards = response.data.map(retard => {
-                        return Object.assign({}, retard, {loading:false})
-                    });
-                    console.log("this.retards: ", this.retards)
-                    this.loading = false
+                    this.tags = response.data
+                    setTimeout(()=>M.FormSelect.init(this.$refs["checkboxTag"]),100)
                 })
         },
         methods: {
@@ -147,6 +146,22 @@
                     // handle error
                     console.log(error);
   })
+            },
+            updateRetards() {
+                this.loading = true
+                axios.post('/Api/Retards', {
+                    tags :this.selectedTags,
+                  })
+                .then(response => {
+                    // handle success
+                    console.log(response.data);
+                    this.retards = response.data.map(retard => {
+                        return Object.assign({}, retard, {loading:false})
+                    });
+                    console.log("this.retards: ", this.retards)
+                    this.loading = false
+                    
+                })
             }
         }
     })

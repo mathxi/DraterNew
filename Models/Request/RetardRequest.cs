@@ -108,10 +108,10 @@ namespace DraterNew.Models.Request
         /// Recupere tout les retards présent dans la base de donnée.
         /// </summary>
         /// <returns>Retourne une liste de retard.</returns>
-        public static ObservableCollection<Retard> GetRetards(int idUserConnecte)
+        public static ObservableCollection<Retard> GetRetards(int idUserConnecte,List<int> tags)
         {
             ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
-            string query = "SELECT * FROM  retard;";
+            string query = "SELECT re.id,re.titre,re.description,re.file FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (4,2,5)";
 
             // Open connection
             databaseConnexion connection = new databaseConnexion();

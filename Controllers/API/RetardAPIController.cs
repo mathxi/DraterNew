@@ -18,12 +18,18 @@ namespace DraterNew.Controllers.API
         {
             return Json(RetardRequest.getRetard(idRetard), JsonRequestBehavior.AllowGet);
         }
-
         [HttpGet]
-        [Route("Api/Retards")]
-        public ActionResult getAllRetards()
+        [Route("Api/Retard/getTags")]
+        public ActionResult GetTags()
         {
-            ObservableCollection<Retard> listRetard = RetardRequest.GetRetards(Convert.ToInt32(User.Identity.Name));
+            return Json(TagsRequest.GetTags(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Route("Api/Retards")]
+        public ActionResult getAllRetards(List<int> tags)
+        {
+            ObservableCollection<Retard> listRetard = RetardRequest.GetRetards(Convert.ToInt32(User.Identity.Name),tags);
             return Json(listRetard, JsonRequestBehavior.AllowGet);
         }
 

@@ -19,14 +19,14 @@ namespace DraterNew.Models.Class
         {
 
         }
-        public Eleve(long id, string pseudo, string mail, string mdp , long idClasse, string photo_profile = "https://picsum.photos/200")
+        public Eleve(long id, string pseudo, string mail, string mdp , long idClasse, string photo_profile)
         {
             this.id = id;
             this.pseudo = pseudo;
             this.mail = mail;
             this.MDP = mdp;
             this.idClasse = ClasseRequest.GetClasse(idClasse);
-            this.photo_profile = photo_profile;
+            this.photo_profile = "https://picsum.photos/200";
         }
 
     }

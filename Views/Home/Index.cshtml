@@ -5,7 +5,7 @@
 
 
 <div id="vue__app">
-    <div class="row">
+    <div v-if="!isTop()" class="row">
         <div class="input-field container">
             <select v-on:change="updateRetards()" multiple ref="checkboxTag" v-model="selectedTags">
                 <option v-for="tag in tags" :value="tag.Id">{{tag.Libelle}}</option>
@@ -14,7 +14,10 @@
         </div>
     </div>
     <div class="card__container">
-
+        <div>
+            <a v-on:click="retardTop()" class="waves-effect waves-light btn">Top 2</a>
+            <a v-on:click="updateRetards()" class="waves-effect waves-light btn">Tous les retards</a>
+        </div>
         <div v-if="!loading" v-for="retard in retards" class="card__retard">
             <div class="card__header">
                 <img :src="retard.file" alt="User profile" />
@@ -68,7 +71,8 @@
             retards: [],
             loading: false,
             tags: [],
-            selectedTags:[]
+            selectedTags: [],
+            displayedRetard:2
         },
         mounted() {
             console.log("Connected: ",this.connectedUser)
@@ -117,7 +121,6 @@
                 this.retards.find(retard => retard.id === tempRetard.id).loading === true;
                 axios.post('/Api/Vote/upVote', {
                     idRetard:tempRetard.id,
-                    idEleve: 2,
                   })
                     .then(response => {
                         this.retards.find(retard => retard.id === tempRetard.id).votes = response.data;
@@ -128,7 +131,6 @@
                 this.retards.find(retard => retard.id === tempRetard.id).loading === true;
                 axios.post('/Api/Vote/downVote', {
                     idRetard:tempRetard.id,
-                    idEleve: 2,
                   })
                     .then(response => {
                         this.retards.find(retard => retard.id === tempRetard.id).votes = response.data;
@@ -148,6 +150,7 @@
   })
             },
             updateRetards() {
+                this.displayedRetard = false
                 this.loading = true
                 axios.post('/Api/Retards', {
                     tags :this.selectedTags,
@@ -160,8 +163,30 @@
                     });
                     console.log("this.retards: ", this.retards)
                     this.loading = false
+                    M.FormSelect.init(this.$refs["checkboxTag"])
                     
                 })
+            },
+            retardTop() {
+                this.displayedRetard = 2
+                this.loading = true
+                axios.post(`/Api/TopXRetards`, {
+                    nbRetard:this.displayedRetard
+                })
+                .then(response => {
+                    // handle success
+                    console.log(response.data);
+                    this.retards = response.data.map(retard => {
+                        return Object.assign({}, retard, {loading:false})
+                    });
+                    console.log("this.retards: ", this.retards)
+                    this.loading = false
+                    
+                })
+            },
+            isTop() {
+                console.log("this.displayedRetard == 'number': ",this.displayedRetard == 'number')
+                return typeof this.displayedRetard == 'number'
             }
         }
     })

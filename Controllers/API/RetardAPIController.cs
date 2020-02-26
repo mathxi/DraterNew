@@ -33,11 +33,11 @@ namespace DraterNew.Controllers.API
             return Json(listRetard, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Api/TopXRetards")]
         public ActionResult getTopXRetards(int nbRetard)
         {
-            List<TopXRetard> listTop100Retard = RetardRequest.GetTopX(Convert.ToInt32(User.Identity.Name), 100);
+            List<TopXRetard> listTop100Retard = RetardRequest.GetTopX(Convert.ToInt32(User.Identity.Name), nbRetard);
             ObservableCollection<Retard> listRetard = new ObservableCollection<Retard>();
             foreach( TopXRetard element in listTop100Retard)
             {

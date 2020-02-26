@@ -20,14 +20,14 @@ namespace DraterNew.Controllers.API
 
         [Route("Api/Vote/upVote")]
         [HttpPost]
-        public ActionResult upVote(int idRetard, int idEleve)
+        public ActionResult upVote(int idRetard)
         {
             return Json(Vote.GetValueFromList(VoteRequest.changeVote(idRetard, long.Parse(User.Identity.Name), 1)));
         }
 
         [Route("Api/Vote/downVote")]
         [HttpPost]
-        public ActionResult DownVote(int idRetard, int idEleve)
+        public ActionResult DownVote(int idRetard)
         {
             return Json(Vote.GetValueFromList(VoteRequest.changeVote(idRetard, long.Parse(User.Identity.Name), -1)));
         }

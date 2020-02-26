@@ -16,19 +16,15 @@ namespace DraterNew.Models.Class
         public int votes { get; set; }
         public int currentUserVote { get; set; }
 
-        public Retard(int id, string titre, string description, string file = "https://picsum.photos/200", int idEleve)
+        public Retard(int id, string titre, string description, string file, int idEleve)
         {
             this.id = id;
             this.titre = titre;
             this.description = description;
-            this.file = file;
+            this.file = "https://picsum.photos/200";
             this.eleve = EleveRequest.GetEleveById(idEleve);
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
             //currentUserVote = DidIVoted(  );
-        }
-         public Retard()
-        {
-            
         }
 
         public Retard(int id, string titre, string description, string file, int idEleve, int idUserConnecte)
@@ -36,7 +32,7 @@ namespace DraterNew.Models.Class
             this.id = id;
             this.titre = titre;
             this.description = description;
-            this.file = file;
+            this.file = "https://picsum.photos/200";
             this.eleve = EleveRequest.GetEleveById(idEleve);
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
             currentUserVote = DidIVoted(idUserConnecte, id);
@@ -70,7 +66,7 @@ namespace DraterNew.Models.Class
             this.id = id;
             this.titre = titre;
             this.description = description;
-            this.file = file;
+            this.file = "https://picsum.photos/200";
             this.eleve = EleveRequest.GetEleveById(idEleve);
             this.nbVote = nbVote;
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
@@ -82,7 +78,7 @@ namespace DraterNew.Models.Class
             this.id = id;
             this.titre = titre;
             this.description = description;
-            this.file = file;
+            this.file = "https://picsum.photos/200";
             this.eleve = EleveRequest.GetEleveById(idEleve);
             this.nbVote = nbVote;
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));

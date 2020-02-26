@@ -26,6 +26,10 @@ namespace DraterNew.Models.Class
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
             //currentUserVote = DidIVoted(  );
         }
+         public Retard()
+        {
+            
+        }
 
         public Retard(int id, string titre, string description, string file, int idEleve, int idUserConnecte)
         {
@@ -45,7 +49,7 @@ namespace DraterNew.Models.Class
         }
     }
 
-    public class Top100Retard
+    public class TopXRetard
     {
         public int id { get; set; }
         public string titre { get; set; }
@@ -61,7 +65,7 @@ namespace DraterNew.Models.Class
         public int votes { get; set; }
         public int currentUserVote { get; set; }
 
-        public Top100Retard(int id, string titre, string description, string file, int idEleve, int nbVote)
+        public TopXRetard(int id, string titre, string description, string file, int idEleve, int nbVote)
         {
             this.id = id;
             this.titre = titre;
@@ -73,7 +77,7 @@ namespace DraterNew.Models.Class
             //currentUserVote = DidIVoted(  );
         }
 
-        public Top100Retard(int id, string titre, string description, string file, int idEleve, int idUserConnecte, int nbVote)
+        public TopXRetard(int id, string titre, string description, string file, int idEleve, int idUserConnecte, int nbVote)
         {
             this.id = id;
             this.titre = titre;

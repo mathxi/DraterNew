@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DraterNew.Controllers.API
 {
+    [Authorize]
     public class VoteAPIController : Controller
     {
         [Route("Api/Vote/getNbVoteByRetard/{idRetard}")]

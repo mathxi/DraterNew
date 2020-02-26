@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace DraterNew.Controllers
 {
+    [Authorize]
     public class TagsController : Controller
     {
         // GET: Tags

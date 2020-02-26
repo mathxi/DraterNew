@@ -2,8 +2,6 @@
     ViewBag.Title = "Tous les retards";
 }
 <link href="~/Content/retard.css" rel="stylesheet" />
-<h1>Drater</h1>
-
 
 <div class="row">
     <div class="col s12">
@@ -22,7 +20,7 @@
         <div class="card__header">
             <img :src="retard.file" alt="User profile" />
             <h3>{{retard.titre}}</h3>
-            <span v-if="!retard.loading"  class="text-darken-3 vote__value">{{retard.votes}}</span>
+            <span v-if="!retard.loading" v-bind:class="{ 'red-text': retard.votes < 0,'green-text': retard.votes > 0}"  class="vote__value">{{retard.votes}}</span>
             <div v-if="retard.loading" class="spinner-layer spinner-green">
                 <div class="circle-clipper left">
                     <div class="circle"></div>
@@ -41,8 +39,8 @@
 
         </p>
         <div>
-            <span v-on:click="changeVote(retard,'up')" href="#"><i v-bind:class="{ 'white-text ToggleVoteUp': retard.currentUserVote ===1}" class="material-icons green-text text-darken-2">keyboard_arrow_up</i></span>
-            <span v-on:click="changeVote(retard,'down')"><i v-bind:class="{ 'ToogleVoteDown': retard.currentUserVote === -1}" class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
+            <span v-on:click="changeVote(retard,'up')" href="#"><i v-bind:class="{ 'ToggleVoteUp': retard.currentUserVote ===1,'green-text': retard.currentUserVote === 0}" class="material-icons text-darken-2">keyboard_arrow_up</i></span>
+            <span v-on:click="changeVote(retard,'down')"><i v-bind:class="{ 'ToogleVoteDown': retard.currentUserVote === -1,' red-text': retard.currentUserVote === 0}" class="material-icons text-darken-2">keyboard_arrow_down</i></span>
         </div>
     </div>
 

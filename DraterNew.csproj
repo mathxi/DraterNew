@@ -237,6 +237,7 @@
     <Content Include="Views\Tags\Create.cshtml" />
     <Content Include="Views\Retard\List.cshtml" />
     <Content Include="Views\Retard\Edit.cshtml" />
+    <Content Include="Views\Eleve\Stats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

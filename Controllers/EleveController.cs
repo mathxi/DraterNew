@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DraterNew.Controllers
 {
+    [Authorize]
     public class EleveController : Controller
     {
         // GET: Eleve

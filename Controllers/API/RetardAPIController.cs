@@ -9,6 +9,7 @@ using DraterNew.Models.Request;
 
 namespace DraterNew.Controllers.API
 {
+    [Authorize]
     public class RetardAPIController : Controller
     {
         [HttpGet]
@@ -27,12 +28,12 @@ namespace DraterNew.Controllers.API
         }
 
         [HttpGet]
-        [Route("Api/Top100Retards")]
-        public ActionResult getTop100Retards()
+        [Route("Api/TopXRetards")]
+        public ActionResult getTopXRetards(int nbRetard)
         {
-            List<Top100Retard> listTop100Retard = RetardRequest.GetTop100(Convert.ToInt32(User.Identity.Name));
+            List<TopXRetard> listTop100Retard = RetardRequest.GetTopX(Convert.ToInt32(User.Identity.Name), 100);
             ObservableCollection<Retard> listRetard = new ObservableCollection<Retard>();
-            foreach( Top100Retard element in listTop100Retard)
+            foreach( TopXRetard element in listTop100Retard)
             {
                 Retard retard = new Retard(element.id, element.titre, element.description, element.file, Convert.ToInt32(element.eleve.id), Convert.ToInt32(User.Identity.Name));
                 listRetard.Add(retard);

@@ -46,7 +46,7 @@
 
 
     <div class="form-group">
-        <input asp-for="FileUpload.FormFile" type="file" name="fileEnvoie">
+        <input asp-for="FileUpload.FormFile" type="file" name="fileEnvoie" required>
         <span asp-validation-for="FileUpload.FormFile"></span>
     </div>
 
@@ -59,7 +59,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour à la connexion", "Index", "Connexion")
 </div>
 
 

@@ -261,9 +261,9 @@ namespace DraterNew.Models.Request
         /// Supprime le retard passé en paramètre dans la base de donnée.
         /// </summary>
         /// <param name="id">L'id du retard que l'on souhaite supprimer.</param>
-        public static void Delete(int id)
+        public static void Delete(int id, int idEleve)
         {
-            string query = "DELETE FROM retard WHERE id = @id";
+            string query = "DELETE FROM retard WHERE id = @id and idEleve = @idEleve";
             // Open connection
             databaseConnexion connection = new databaseConnexion();
             if (connection.OpenConnection() == true)
@@ -273,6 +273,8 @@ namespace DraterNew.Models.Request
                 {
                     // shield sql injection
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@idEleve", idEleve);
+                    
 
                     // close Connection
 
@@ -286,11 +288,11 @@ namespace DraterNew.Models.Request
         /// </summary>
         /// <param name="idRetard">Id du retard que l'on souhaite recuperer.</param>
         /// <returns>Retourne un retard.</returns>
-        public static List<Top100Retard> GetTop100(int idEleve)
+        public static List<TopXRetard> GetTopX(int idEleve, int limite)
         {
-            List<Top100Retard> liste = new List<Top100Retard>();
+            List<TopXRetard> liste = new List<TopXRetard>();
             
-            string query = "SELECT*,((select count(valeur) from vote where idRetard=retardP.id AND valeur=1 )-(select count(valeur) as 'positive value' from vote where idRetard = retardP.id AND valeur = -1 )) as 'FinalValue' FROM retard retardP order by((select count(valeur) from vote where idRetard= retardP.id AND valeur = 1)-(select count(valeur) as 'positive value' from vote where idRetard = retardP.id AND valeur = -1 )) desc";
+            string query = "SELECT *,((select count(valeur) from vote where idRetard=retardP.id AND valeur=1 )-(select count(valeur) as 'positive value' from vote where idRetard = retardP.id AND valeur = -1 )) as 'FinalValue' FROM retard retardP order by((select count(valeur) from vote where idRetard= retardP.id AND valeur = 1)-(select count(valeur) as 'positive value' from vote where idRetard = retardP.id AND valeur = -1 )) desc LIMIT @limite";
 
             // Open connection
             databaseConnexion connection = new databaseConnexion();
@@ -299,14 +301,15 @@ namespace DraterNew.Models.Request
                 // Create Command
                 using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
                 {
+                    cmd.Parameters.AddWithValue("@limite", limite);
                     // Create a data reader and Execute the command
                     using (MySqlDataReader dataReader = cmd.ExecuteReader())
                     {
-
+                        
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            Top100Retard retard = new Top100Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4),idEleve ,dataReader.GetInt32(5));
+                            TopXRetard retard = new TopXRetard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4),idEleve ,dataReader.GetInt32(5));
                             liste.Add(retard);
                         }
 

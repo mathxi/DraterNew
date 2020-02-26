@@ -164,7 +164,7 @@ namespace DraterNew.Models.Request
             else
             {
                 ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
-                string query = "SELECT * from retard";
+                string query = "SELECT * from retard order by id desc";
 
                 // Open connection
                 databaseConnexion connection = new databaseConnexion();

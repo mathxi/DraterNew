@@ -35,13 +35,13 @@ namespace DraterNew.Models.Class
             this.file = file;
             this.eleve = EleveRequest.GetEleveById(idEleve);
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
-            currentUserVote = DidIVoted(eleve,id);
+            currentUserVote = DidIVoted(idUserConnecte, id);
         }
 
         
-        public static int DidIVoted(Eleve eleve, int idRetard)
+        public static int DidIVoted(int idEleveConnected, int idRetard)
         {
-            return Vote.GetValueFromList(VoteRequest.getVoteByEleveRetard(eleve.id, idRetard));
+            return Vote.GetValueFromList(VoteRequest.getVoteByEleveRetard(idEleveConnected, idRetard));
         }
     }
 }

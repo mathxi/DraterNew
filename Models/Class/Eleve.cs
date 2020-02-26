@@ -29,10 +29,5 @@ namespace DraterNew.Models.Class
             this.photo_profile = photo_profile;
         }
 
-        public static Boolean didIVoted()
-        {
-            
-            return true;
-        }
     }
 }

@@ -38,10 +38,10 @@ namespace DraterNew.Controllers
         }
 
         [HttpGet]
-        [Route("Eleve/Update/{id}")]
-        public ActionResult Update(int id)
+        [Route("Eleve/Update")]
+        public ActionResult Update()
         {
-            EleveVM elevevm = new EleveVM(EleveRequest.GetEleveById(id));
+            EleveVM elevevm = new EleveVM(EleveRequest.GetEleveById(long.Parse(User.Identity.Name)));
 
             ViewBag.Classe = new SelectList(ClasseRequest.GetAllClasses(), "id", "libelle", elevevm.Eleve.idClasse);
             return View(elevevm);

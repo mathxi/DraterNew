@@ -2,10 +2,10 @@
 -- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3302
--- Généré le :  mer. 26 fév. 2020 à 22:33
--- Version du serveur :  5.7.28
--- Version de PHP :  7.4.2
+-- Hôte : 127.0.0.1:3308
+-- Généré le :  mer. 26 fév. 2020 à 23:14
+-- Version du serveur :  8.0.18
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -32,16 +32,20 @@ DROP TABLE IF EXISTS `classe`;
 CREATE TABLE IF NOT EXISTS `classe` (
   `Id` bigint(11) NOT NULL AUTO_INCREMENT,
   `Libelle` varchar(255) NOT NULL,
-  `promo` datetime NOT NULL,
+  `promo` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `classe`
 --
 
 INSERT INTO `classe` (`Id`, `Libelle`, `promo`) VALUES
-(1, 'B2', '2019-09-02 00:00:00');
+(7, 'B1', '2020-02-26 23:57:17'),
+(8, 'B2', '2020-02-26 23:57:21'),
+(9, 'B3', '2020-02-26 23:57:26'),
+(10, 'I4', '2020-02-26 23:57:39'),
+(11, 'I5', '2020-02-26 23:57:50');
 
 -- --------------------------------------------------------
 
@@ -59,16 +63,14 @@ CREATE TABLE IF NOT EXISTS `eleve` (
   `Photo_Profile` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`),
   KEY `IdClasse` (`IdClasse`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `eleve`
 --
 
 INSERT INTO `eleve` (`Id`, `pseudo`, `mail`, `mdp`, `IdClasse`, `Photo_Profile`) VALUES
-(2, 'math', 'mathnewph@gmail.com', 'math', 1, 'https://picsum.photos/200'),
-(4, 'clement', 'clement', 'clement', 1, 'Kernel Power 41.PNG'),
-(5, 'clement', 'clement', 'clement', 1, 'Kernel Power 41.PNG');
+(6, 'ClemMor', 'clement.moreau@epsi.fr', 'clement', 9, '');
 
 -- --------------------------------------------------------
 
@@ -79,22 +81,21 @@ INSERT INTO `eleve` (`Id`, `pseudo`, `mail`, `mdp`, `IdClasse`, `Photo_Profile`)
 DROP TABLE IF EXISTS `retard`;
 CREATE TABLE IF NOT EXISTS `retard` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `titre` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci NOT NULL,
-  `file` text COLLATE utf8_unicode_ci NOT NULL,
+  `titre` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `file` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `idEleve` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idCreateur` (`idEleve`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `retard`
 --
 
 INSERT INTO `retard` (`id`, `titre`, `description`, `file`, `idEleve`) VALUES
-(4, 'La police m\'arrête, c\'est relou', 'Malheureusement la police m\'arrête c\'est relou, mais bon, c\'est la vie.', 'https://picsum.photos/200', 2),
-(17, 'sdqsd', 'qdqsd', 'https://picsum.photos/200', 2),
-(18, 'Test', 'qsdqsd', 'https://picsum.photos/200', 5);
+(20, 'Contrôleurs TAN', 'Je voulais prendre le bus a 12h50 pour reprendre les cours a 13h. C\'est en m\'apprêtant à monter dans le busway que je vois les contrôleurs. Je décide de ne pas monter et d\'attendre le prochain tout en disant à mon camarade : \"Je suis sur qu\'ils vont nous attendre au prochain arrêt !\". Pas manqué lorsque l\'on prends le prochain bus il nous attendaient à l\'arrêt suivant. Nous avons donc fini le trajet à pied', 'Kernel Power 41.PNG', 6),
+(21, 'Nuit blanche ASP', 'Afin de finir le magnifique projet ASP.NET que notre admirable professeur ( mais également notre Dieu ) nous à confié, nous avons effectués quelques nuits blanches consécutives et la fatigue nous clou au lit. ', 'Kernel Power 41.PNG', 6);
 
 -- --------------------------------------------------------
 
@@ -107,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `tags`
@@ -118,8 +119,7 @@ INSERT INTO `tags` (`id`, `libelle`) VALUES
 (2, 'WTF'),
 (3, 'Idiot'),
 (4, 'Surnaturel'),
-(5, 'TestTAg'),
-(6, 'qdqsd');
+(7, 'Karma');
 
 -- --------------------------------------------------------
 
@@ -133,16 +133,15 @@ CREATE TABLE IF NOT EXISTS `tags_retard` (
   `idRetard` int(11) NOT NULL,
   `idTags` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `tags_retard`
 --
 
 INSERT INTO `tags_retard` (`id`, `idRetard`, `idTags`) VALUES
-(4, 18, 2),
-(5, 18, 4),
-(6, 4, 4);
+(8, 20, 1),
+(9, 21, 7);
 
 -- --------------------------------------------------------
 
@@ -160,16 +159,15 @@ CREATE TABLE IF NOT EXISTS `vote` (
   PRIMARY KEY (`id`),
   KEY `idEleve` (`idEleve`) USING BTREE,
   KEY `idRetard` (`idRetard`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Déchargement des données de la table `vote`
 --
 
 INSERT INTO `vote` (`id`, `idEleve`, `idRetard`, `dateVote`, `valeur`) VALUES
-(1, 4, 4, '2020-02-26 18:12:11', 1),
-(54, 2, 18, '2020-02-26 20:21:44', 1),
-(60, 2, 17, '2020-02-26 20:50:40', -1);
+(66, 6, 21, '2020-02-27 00:12:56', 1),
+(67, 6, 20, '2020-02-27 00:12:57', -1);
 
 --
 -- Contraintes pour les tables déchargées

@@ -24,7 +24,7 @@
     }
 
     .card__retard p {
-        overflow: hidden;
+        overflow: auto;
         height: 100px;
         margin: 0;
         font-size: 0.8rem;

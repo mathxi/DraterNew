@@ -39,7 +39,7 @@ namespace DraterNew.Controllers
                 if (Convert.ToString(eleve.id) != null)
                 {
                     FormsAuthentication.SetAuthCookie(Convert.ToString(eleve.id), true);
-                    Session["EleveConnecte"] = eleve.id;
+                    Session["EleveConnecte"] = eleve;
 
                     return RedirectToAction("Index", "Home");
                 }

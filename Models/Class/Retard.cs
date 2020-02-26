@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using DraterNew.Models.Request;
+﻿using DraterNew.Models.Request;
 
 namespace DraterNew.Models.Class
 {
-    public class Retard : Controller
+    public class Retard
     {
         public int id { get; set; }
         public string titre { get; set; }
@@ -16,24 +11,36 @@ namespace DraterNew.Models.Class
 
         public Eleve eleve { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Retards_Tags> Retards_Tags { get; set; }
+        //public virtual ICollection<Retards_Tags> Retards_Tags { get; set; }
 
         public int votes { get; set; }
         public int currentUserVote { get; set; }
 
-        public Retard(int id, string titre, string description, string file)
+        public Retard(int id, string titre, string description, string file, int idEleve)
         {
             this.id = id;
             this.titre = titre;
             this.description = description;
             this.file = file;
+            this.eleve = EleveRequest.GetEleveById(idEleve);
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
-            currentUserVote = DidIVoted(id);
+            //currentUserVote = DidIVoted(  );
         }
-        public static int DidIVoted(int idRetard)
+
+        public Retard(int id, string titre, string description, string file, int idEleve, int idUserConnecte)
         {
-            Eleve eleve = EleveRequest.GetEleveById();
+            this.id = id;
+            this.titre = titre;
+            this.description = description;
+            this.file = file;
+            this.eleve = EleveRequest.GetEleveById(idEleve);
+            votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
+            currentUserVote = DidIVoted(eleve,id);
+        }
+
+        
+        public static int DidIVoted(Eleve eleve, int idRetard)
+        {
             return Vote.GetValueFromList(VoteRequest.getVoteByEleveRetard(eleve.id, idRetard));
         }
     }

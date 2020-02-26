@@ -15,10 +15,10 @@ namespace DraterNew.Models.Class
 
         public DateTime dateVote { get; set; }
 
-        public Boolean valeur{ get; set; }
+        public int valeur{ get; set; }
 
         public Vote() { }
-        public Vote(int id, int idEleve, int idRetard, DateTime dateVote, bool valeur)
+        public Vote(int id, int idEleve, int idRetard, DateTime dateVote, int valeur)
         {
             this.id = id;
             this.idEleve = idEleve;
@@ -32,16 +32,7 @@ namespace DraterNew.Models.Class
             int voteValue = 0;
             foreach (var vote in votes)
             {
-                // +1 si vote up -1 si vote down et 0 si pas de vote
-               // voteValue += vote.valeur == true ? 1 : -1;
-                if(vote.valeur == true)
-                {
-                    voteValue++;
-                }
-                else if(vote.valeur == false)
-                {
-                    voteValue--;
-                }
+                voteValue += vote.valeur;
             }
 
             return voteValue;

@@ -39,7 +39,7 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4));
                             return retard;
                         }
 
@@ -85,7 +85,7 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4));
 
                             retards.Add(retard);
                         }
@@ -108,7 +108,7 @@ namespace DraterNew.Models.Request
         /// Recupere tout les retards présent dans la base de donnée.
         /// </summary>
         /// <returns>Retourne une liste de retard.</returns>
-        public static ObservableCollection<Retard> GetRetards()
+        public static ObservableCollection<Retard> GetRetards(int idUserConnecte)
         {
             ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
             string query = "SELECT * FROM  retard;";
@@ -128,7 +128,7 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4), idUserConnecte);
                             retards.Add(retard);
                         }
 
@@ -176,7 +176,7 @@ namespace DraterNew.Models.Request
                         // Read the data and store them in the list
                         while (dataReader.Read())
                         {
-                            retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3));
+                            retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4));
                         }
 
                         // close Data Reader

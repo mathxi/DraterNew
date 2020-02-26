@@ -44,10 +44,14 @@
 
 .ToggleVoteUp {
     background-color: green;
+    color: white !important;
+    -webkit-user-select: none;
 }
 
 .ToogleVoteDown {
     background-color: red;
+    color: white !important;
+    -webkit-user-select: none;
 }
 
 .card__container {

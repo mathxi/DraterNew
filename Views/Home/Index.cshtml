@@ -22,7 +22,7 @@
         <div class="card__header">
             <img :src="retard.file" alt="User profile" />
             <h3>{{retard.titre}}</h3>
-            <span v-if="!retard.loading" class=" text-darken-3 vote__value">{{retard.votes}}</span>
+            <span v-if="!retard.loading"  class="text-darken-3 vote__value">{{retard.votes}}</span>
             <div v-if="retard.loading" class="spinner-layer spinner-green">
                 <div class="circle-clipper left">
                     <div class="circle"></div>
@@ -41,8 +41,8 @@
 
         </p>
         <div>
-            <span v-on:click="upVote(retard)" href="#"><i class="material-icons white-text text-darken-2 ToggleVoteUp">keyboard_arrow_up</i></span>
-            <span v-on:click="updateVote(-1,retard)"><i class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
+            <span v-on:click="changeVote(retard,'up')" href="#"><i v-bind:class="{ 'white-text ToggleVoteUp': retard.currentUserVote ===1}" class="material-icons green-text text-darken-2">keyboard_arrow_up</i></span>
+            <span v-on:click="changeVote(retard,'down')"><i v-bind:class="{ 'ToogleVoteDown': retard.currentUserVote === -1}" class="material-icons red-text text-darken-2">keyboard_arrow_down</i></span>
         </div>
     </div>
 
@@ -66,10 +66,12 @@
     var app = new Vue({
         el: '#vue__app',
         data: {
+            connectedUser:@User.Identity.Name,
             retards: [],
             loading: false,
         },
         mounted() {
+            console.log("Connected: ",this.connectedUser)
             this.loading = true
             axios.get('Api/Retards')
                 .then(response => {
@@ -83,16 +85,35 @@
                 })
         },
         methods: {
-            changeVote(isUpvote, retard) {
+            changeVote(tempRetard, method) {
 
-                axios.get(`/Api/vote/update/${retard.id}/${isUpvote}`)
-                    .then(function (response) {
-                        updatedRetard = this.retards.find(dataRetard => {
-                            return dataRetard.id === retard.id
-                        })
-                        updatedRetard.connectedVote === isUpvote ? 0 : isUpvote
-                        console.log("updatedRetard", updatedRetard)
-                    })
+                if (method === "up") {
+                    if (tempRetard.currentUserVote === 1) {
+                        console.log("remove")
+                        this.removeVote(tempRetard)
+
+                    } else if (tempRetard.currentUserVote === -1) {
+                        console.log("upp")
+                        this.upVote(tempRetard)
+                    } else if (tempRetard.currentUserVote === 0) {
+                        console.log("upp")
+                        this.upVote(tempRetard)
+                    }
+                    
+                } else if (method === "down") {
+                    if (tempRetard.currentUserVote === -1) {
+                        console.log("remove")
+                        this.removeVote(tempRetard)
+
+                    } else if (tempRetard.currentUserVote === 1) {
+                        console.log("down")
+                        this.downVote(tempRetard)
+                    } else if (tempRetard.currentUserVote === 0) {
+                        console.log("upp")
+                        this.downVote(tempRetard)
+                    }
+                    
+                }
             },
             upVote(tempRetard) {
                 this.retards.find(retard => retard.id === tempRetard.id).loading === true;
@@ -102,7 +123,31 @@
                   })
                     .then(response => {
                         this.retards.find(retard => retard.id === tempRetard.id).votes = response.data;
+                        this.retards.find(retard => retard.id === tempRetard.id).currentUserVote = 1;
                   })
+            },
+            downVote(tempRetard) {
+                this.retards.find(retard => retard.id === tempRetard.id).loading === true;
+                axios.post('/Api/Vote/downVote', {
+                    idRetard:tempRetard.id,
+                    idEleve: 2,
+                  })
+                    .then(response => {
+                        this.retards.find(retard => retard.id === tempRetard.id).votes = response.data;
+                        this.retards.find(retard => retard.id === tempRetard.id).currentUserVote = -1;
+                  })
+            },
+            removeVote(tempRetard) {
+                axios.post('/Api/Vote/delete', {
+                    idRetard :tempRetard.id,
+                  })
+                    .then(response => {
+                        this.retards.find(retard => retard.id === tempRetard.id).votes = response.data;
+                        this.retards.find(retard => retard.id === tempRetard.id).currentUserVote = 0;
+                  }).catch(function (error) {
+                    // handle error
+                    console.log(error);
+  })
             }
         }
     })

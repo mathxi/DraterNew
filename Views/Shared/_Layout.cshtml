@@ -12,28 +12,40 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body>
+    <script>
+          document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.dropdown-trigger');
+                var instances = M.Dropdown.init(elems);
+          });
+    </script>
     @{
         if (User.Identity.IsAuthenticated)
         {
+        <ul id="dropdown1" class="dropdown-content" style="right:0px;">
+            <li><a href="/Eleve/Update">Profil</a></li>
+            <li><a href="/Retard/List">Mes retards</a></li>
+            <li class="divider"></li>
+            <li><a href="/Connexion/Logout">Déconnexion</a></li>
+        </ul>
 
             <div class="navbar-fixed">
                 <nav>
                     <div class="nav-wrapper">
-                        <a href="#!" class="brand-logo">Logo</a>
+                        <a href="/" class="brand-logo">Drater</a>
                         <ul class="right hide-on-med-and-down">
-                            <li><a href="sass.html">Sass</a></li>
-                            <li><a href="Deconnexion">Déconnexion</a></li>
+                            <li><a href="/">Accueil</a></li>
+                            <li><a href="/Retard/Create">Nouveau retard</a></li>
+                            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Paramètres utilisateur<i class="material-icons right">person</i></a></li>
                         </ul>
                     </div>
                 </nav>
             </div>
         }
     }
-
     @RenderBody()
-
 
     @RenderSection("scripts", required: false)
 </body>

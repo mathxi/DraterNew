@@ -114,7 +114,7 @@ namespace DraterNew.Models.Request
             if(tags != null)
             {
                 ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
-                string query = "SELECT re.id,re.titre,re.description,re.file, re.idEleve FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (@params)";
+                string query = "SELECT DISTINCT re.id,re.titre,re.description,re.file, re.idEleve FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (@params)";
 
                 // Open connection
                 databaseConnexion connection = new databaseConnexion();

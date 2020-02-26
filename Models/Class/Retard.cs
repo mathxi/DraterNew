@@ -16,7 +16,7 @@ namespace DraterNew.Models.Class
         public int votes { get; set; }
         public int currentUserVote { get; set; }
 
-        public Retard(int id, string titre, string description, string file, int idEleve)
+        public Retard(int id, string titre, string description, string file = "https://picsum.photos/200", int idEleve)
         {
             this.id = id;
             this.titre = titre;

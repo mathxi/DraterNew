@@ -26,6 +26,10 @@ namespace DraterNew.Models.Class
             votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
             //currentUserVote = DidIVoted(  );
         }
+         public Retard()
+        {
+            
+        }
 
         public Retard(int id, string titre, string description, string file, int idEleve, int idUserConnecte)
         {

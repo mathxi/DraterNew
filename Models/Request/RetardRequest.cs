@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace DraterNew.Models.Request
@@ -108,44 +109,95 @@ namespace DraterNew.Models.Request
         /// Recupere tout les retards présent dans la base de donnée.
         /// </summary>
         /// <returns>Retourne une liste de retard.</returns>
-        public static ObservableCollection<Retard> GetRetards(int idUserConnecte,List<int> tags)
+        public static ObservableCollection<Retard> GetRetards(int idUserConnecte, List<int> tags)
         {
-            ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
-            string query = "SELECT re.id,re.titre,re.description,re.file FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (4,2,5)";
-
-            // Open connection
-            databaseConnexion connection = new databaseConnexion();
-            if (connection.OpenConnection() == true)
-
+            if(tags != null)
             {
-                // Create Command
-                using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
-                {
+                ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
+                string query = "SELECT re.id,re.titre,re.description,re.file, re.idEleve FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (@params)";
 
-                    // Create a data reader and Execute the command
-                    using (MySqlDataReader dataReader = cmd.ExecuteReader())
+                // Open connection
+                databaseConnexion connection = new databaseConnexion();
+                if (connection.OpenConnection() == true)
+
+                {
+                    // Create Command
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
                     {
-                        // Read the data and store them in the list
-                        while (dataReader.Read())
+                        StringBuilder sb = new StringBuilder();
+                        foreach (var element in tags)
                         {
-                            Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4), idUserConnecte);
-                            retards.Add(retard);
+                            sb.Append(Convert.ToString(element));
+                            sb.Append(",");
                         }
 
-                        // close Data Reader
-                        dataReader.Close();
+                    string parametres = Convert.ToString(sb.Remove(sb.Length - 1, 1));
+                        cmd.Parameters.AddWithValue("@params", Convert.ToString(parametres));
+                        // Create a data reader and Execute the command
+                        using (MySqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            // Read the data and store them in the list
+                            while (dataReader.Read())
+                            {
+                                Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4), idUserConnecte);
+                                retards.Add(retard);
+                            }
+
+                            // close Data Reader
+                            dataReader.Close();
+                        }
+
+                        // close Connection
+                        connection.CloseConnection();
+
                     }
 
-                    // close Connection
-                    connection.CloseConnection();
-
+                    // return list to be displayed
                 }
 
-                // return list to be displayed
+                return retards;
             }
+            else
+            {
+                ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
+                string query = "SELECT * from retard";
 
-        return retards;
+                // Open connection
+                databaseConnexion connection = new databaseConnexion();
+                if (connection.OpenConnection() == true)
+
+                {
+                    // Create Command
+                    using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
+                    {
+
+                        // Create a data reader and Execute the command
+                        using (MySqlDataReader dataReader = cmd.ExecuteReader())
+                        {
+                            // Read the data and store them in the list
+                            while (dataReader.Read())
+                            {
+                                Retard retard = new Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4), idUserConnecte);
+                                retards.Add(retard);
+                            }
+
+                            // close Data Reader
+                            dataReader.Close();
+                        }
+
+                        // close Connection
+                        connection.CloseConnection();
+
+                    }
+
+                    // return list to be displayed
+                }
+
+                return retards;
+            }
+            
         }
+
 
         /// <summary>
         /// Méthode permettant de recuperer un retard.

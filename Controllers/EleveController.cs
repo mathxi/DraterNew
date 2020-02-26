@@ -56,7 +56,9 @@ namespace DraterNew.Controllers
             {
                 eleve.idClasse = ClasseRequest.GetClasse(Int64.Parse(Request["Classe"]));
                 eleve.photo_profile = Request["fileEnvoie"];
-                EleveRequest.Create(eleve);
+                EleveRequest.Update(eleve);
+
+                return RedirectToAction("Index", "Home");
                 
             }
 

@@ -47,6 +47,13 @@ namespace DraterNew.Controllers
             return View(elevevm);
         }
 
+        [HttpGet]
+        [Route("Eleve/Stats")]
+        public ActionResult Stats()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Eleve/Update/{id}")]

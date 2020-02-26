@@ -1,12 +1,13 @@
-﻿using DraterNew.Models.Request;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
+using DraterNew.Models.Request;
 
 namespace DraterNew.Models.Class
 {
-    public class Retard
+    public class Retard : Controller
     {
         public int id { get; set; }
         public string titre { get; set; }
@@ -14,6 +15,7 @@ namespace DraterNew.Models.Class
         public string file { get; set; }
 
         public int votes { get; set; }
+        public int currentUserVote { get; set; }
 
         public Retard(int id, string titre, string description, string file)
         {
@@ -21,10 +23,13 @@ namespace DraterNew.Models.Class
             this.titre = titre;
             this.description = description;
             this.file = file;
-
-            List<Vote> votes = VoteRequest.getVoteByRetard(id);
-
-            this.votes = Vote.GetValueFromList(votes);
+            votes = Vote.GetValueFromList(VoteRequest.getVoteByRetard(id));
+            currentUserVote = DidIVoted(id);
+        }
+        public static int DidIVoted(int idRetard)
+        {
+            Eleve eleve = EleveRequest.GetEleveById();
+            return Vote.GetValueFromList(VoteRequest.getVoteByEleveRetard(eleve.id, idRetard));
         }
     }
 }

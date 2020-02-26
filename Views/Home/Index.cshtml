@@ -94,14 +94,14 @@
                         console.log("updatedRetard", updatedRetard)
                     })
             },
-            upVote(retard) {
-                retard.loading = true
+            upVote(tempRetard) {
+                this.retards.find(retard => retard.id === tempRetard.id).loading === true;
                 axios.post('/Api/Vote/upVote', {
-                    idRetard:retard.id,
+                    idRetard:tempRetard.id,
                     idEleve: 2,
                   })
-                    .then(function (response) {
-                    console.log(response);
+                    .then(response => {
+                        this.retards.find(retard => retard.id === tempRetard.id).votes = response.data;
                   })
             }
         }

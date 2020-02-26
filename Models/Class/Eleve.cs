@@ -28,5 +28,11 @@ namespace DraterNew.Models.Class
             this.idClasse = ClasseRequest.GetClasse(idClasse);
             this.photo_profile = photo_profile;
         }
+
+        public static Boolean didIVoted()
+        {
+            
+            return true;
+        }
     }
 }

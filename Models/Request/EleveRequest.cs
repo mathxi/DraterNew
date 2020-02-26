@@ -11,11 +11,10 @@ namespace DraterNew.Models.Request
     public class EleveRequest 
     {
         /// <summary>
-        /// Méthode permettant la récupération d'un éleve a l'aide de son pseudo ainsi que de son mdp
+        /// Méthode permettant la récupération d'un éleve a l'aide de son pseudo ainsi que de son mdp.
         /// </summary>
-        /// <param name="pseudo">Pseudo de l'éleve</param>
-        /// <param name="mdp">Mot de passe de l'éléve</param>
-        /// <returns></returns>
+        /// <param name="pseudo">Pseudo de l'éleve.</param>
+        /// <param name="mdp">Mot de passe de l'éléve.</param>
         public static Eleve GetEleveByPseudoAndMDP(string pseudo, string mdp)
         {
             Eleve eleve = null;
@@ -59,8 +58,7 @@ namespace DraterNew.Models.Request
         /// <summary>
         /// Permet de retourner un éleve en fonction de son ID.
         /// </summary>
-        /// <param name="id">L'id de l'éleve que l'on souhaite récuperer</param>
-        /// <returns></returns>
+        /// <param name="id">L'id de l'éleve que l'on souhaite récuperer.</param>
         public static Eleve GetEleveById(long id)
         {
             Eleve eleve = null;
@@ -103,7 +101,7 @@ namespace DraterNew.Models.Request
          /// <summary>
         /// Méthode permettant la mise a jour d'une classe
         /// </summary>
-        /// <param name="classe">Classe que l'on souhaite mettre a jour</param>
+        /// <param name="classe">Classe que l'on souhaite mettre a jour.</param>
         public static void Update(Classe classe)
         {
 
@@ -134,7 +132,7 @@ namespace DraterNew.Models.Request
         /// <summary>
         /// Méthode permettant la création d'un éleve
         /// </summary>
-        /// <param name="eleve">Eleve que l'on souhaite créer dans la base</param>
+        /// <param name="eleve">Eleve que l'on souhaite créer dans la base.</param>
         public static void Create(Eleve eleve)
         {
 
@@ -165,7 +163,7 @@ namespace DraterNew.Models.Request
         /// <summary>
         /// Méthode permettant la mise a jour d'un éléve
         /// </summary>
-        /// <param name="eleve">Eleve que l'on souhaite mettre a jour</param>
+        /// <param name="eleve">Eleve que l'on souhaite mettre a jour.</param>
         public static void Update(Eleve eleve)
         {
 
@@ -220,6 +218,8 @@ namespace DraterNew.Models.Request
                 }
             }
         }
+
+
     }
 
 }

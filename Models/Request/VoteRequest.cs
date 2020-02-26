@@ -9,7 +9,7 @@ namespace DraterNew.Models.Request
 {
     public class VoteRequest
     {
-        public static List<Vote> getVoteByRetard(long Id)
+        public static List<Vote> getVoteByRetard(long idRetard)
         {
             List<Vote> votes = new List<Vote>();
             string query = "SELECT * FROM vote where idRetard=@id;";
@@ -23,7 +23,7 @@ namespace DraterNew.Models.Request
                 MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection());
 
                 // shield sql injection
-                cmd.Parameters.AddWithValue("@id", Id);
+                cmd.Parameters.AddWithValue("@id", idRetard);
 
                 // Create a data reader and Execute the command
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -106,6 +106,35 @@ namespace DraterNew.Models.Request
 
             return votes;
 
+        }
+
+
+        public static List<Vote> getVoteByEleveRetard(long idEleve, int idRetard)
+        {
+            List<Vote> votes = new List<Vote>();
+            string query2 = "SELECT * FROM vote where idRetard=@idRetard AND idEleve=@idEleve;";
+            databaseConnexion connection = new databaseConnexion();
+            if (connection.OpenConnection() == true)
+            {
+                // Create a data reader and Execute the command
+                using (MySqlCommand cmd = new MySqlCommand(query2, connection.GetConnection()))
+                {
+                    cmd.Parameters.AddWithValue("@idRetard", idRetard);
+                    cmd.Parameters.AddWithValue("@idEleve", idEleve);
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    // Read the data and store them in the list
+                    while (dataReader.Read())
+                    {
+                        votes.Add(new Vote(dataReader.GetInt32(0), dataReader.GetInt32(1), dataReader.GetInt32(2), dataReader.GetDateTime(3), dataReader.GetBoolean(4)));
+                    }
+                }
+
+
+
+            }
+            connection.CloseConnection();
+            return votes;
         }
     }
 }

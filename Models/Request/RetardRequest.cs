@@ -114,7 +114,18 @@ namespace DraterNew.Models.Request
             if(tags != null)
             {
                 ObservableCollection<Retard> retards = new ObservableCollection<Retard>();
-                string query = "SELECT DISTINCT re.id,re.titre,re.description,re.file, re.idEleve FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (@params)";
+                StringBuilder sb = new StringBuilder();
+                sb.Append("SELECT DISTINCT re.id,re.titre,re.description,re.file, re.idEleve FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (");
+                foreach (var element in tags)
+                {
+                    sb.Append(Convert.ToString(element));
+                    sb.Append(",");
+                }
+
+                sb = sb.Remove(sb.Length - 1, 1);
+                sb.Append(")");
+                string query = Convert.ToString(sb);
+                //string query = "SELECT DISTINCT re.id,re.titre,re.description,re.file, re.idEleve FROM retard re JOIN tags_retard tg_re on re.id=tg_re.idRetard WHERE tg_re.idTags in (@params)";
 
                 // Open connection
                 databaseConnexion connection = new databaseConnexion();
@@ -124,15 +135,8 @@ namespace DraterNew.Models.Request
                     // Create Command
                     using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
                     {
-                        StringBuilder sb = new StringBuilder();
-                        foreach (var element in tags)
-                        {
-                            sb.Append(Convert.ToString(element));
-                            sb.Append(",");
-                        }
-
-                    string parametres = Convert.ToString(sb.Remove(sb.Length - 1, 1));
-                        cmd.Parameters.AddWithValue("@params", Convert.ToString(parametres));
+                        
+                        //cmd.Parameters.AddWithValue("@params", Convert.ToString(parametres));
                         // Create a data reader and Execute the command
                         using (MySqlDataReader dataReader = cmd.ExecuteReader())
                         {

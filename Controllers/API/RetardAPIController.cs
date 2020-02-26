@@ -40,5 +40,19 @@ namespace DraterNew.Controllers.API
             }
             return Json(listRetard, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        [Route("Api/Retards/GetByTags")]
+        public ActionResult GetRetardsByTags(int nbRetard)
+        {
+            List<TopXRetard> listTop100Retard = RetardRequest.GetTopX(Convert.ToInt32(User.Identity.Name), 100);
+            ObservableCollection<Retard> listRetard = new ObservableCollection<Retard>();
+            foreach (TopXRetard element in listTop100Retard)
+            {
+                Retard retard = new Retard(element.id, element.titre, element.description, element.file, Convert.ToInt32(element.eleve.id), Convert.ToInt32(User.Identity.Name));
+                listRetard.Add(retard);
+            }
+            return Json(listRetard, JsonRequestBehavior.AllowGet);
+        }
     }
 }

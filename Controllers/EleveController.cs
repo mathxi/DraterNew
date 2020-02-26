@@ -54,6 +54,8 @@ namespace DraterNew.Controllers
         [Route("Eleve/Stats")]
         public ActionResult Stats()
         {
+            ViewBag.Retard = new SelectList(RetardRequest.getRetardByEleve(Int32.Parse(User.Identity.Name)), "id", "titre");
+
             return View();
         }
 

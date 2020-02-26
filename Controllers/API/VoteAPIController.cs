@@ -15,7 +15,7 @@ namespace DraterNew.Controllers.API
         [HttpGet]
         public ActionResult Index(int idRetard)
         {
-            return Json(Vote.GetValueFromList(VoteRequest.getVoteByRetard(idRetard)));
+            return Json(Vote.GetValueFromList(VoteRequest.getVoteByRetard(idRetard)), JsonRequestBehavior.AllowGet);
         }
 
         [Route("Api/Vote/upVote")]
@@ -37,6 +37,13 @@ namespace DraterNew.Controllers.API
         public ActionResult DeleteVote(int idRetard)
         {
             return Json(Vote.GetValueFromList(VoteRequest.DeleteVote(idRetard, Convert.ToInt32(User.Identity.Name))));
+        }
+
+        [Route("Api/Vote/GetByRetard")]
+        [HttpGet]
+        public ActionResult GetByIdRetard(int idRetard)
+        {
+            return Json(VoteRequest.getVoteByRetard(idRetard), JsonRequestBehavior.AllowGet);
         }
     }
 }

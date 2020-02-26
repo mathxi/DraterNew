@@ -193,21 +193,20 @@ namespace DraterNew.Models.Request
                 {
                     cmd.Parameters.AddWithValue("@idRetard", idRetard);
                     cmd.Parameters.AddWithValue("@idEleve", idEleve);
-                    MySqlDataReader dataReader = cmd.ExecuteReader();
-
-                    // Read the data and store them in the list
-                    while (dataReader.Read())
+                    using (MySqlDataReader dataReader = cmd.ExecuteReader())
                     {
-                        votes.Add(new Vote(dataReader.GetInt32(0), dataReader.GetInt32(1), dataReader.GetInt32(2), dataReader.GetDateTime(3), dataReader.GetInt32(4)));
+
+                        // Read the data and store them in the list
+                        while (dataReader.Read())
+                        {
+                            votes.Add(new Vote(dataReader.GetInt32(0), dataReader.GetInt32(1), dataReader.GetInt32(2), dataReader.GetDateTime(3), dataReader.GetInt32(4)));
+                        }
                     }
                 }
-
-
-
             }
-            connection.CloseConnection();
             return votes;
         }
+
         public static List<Vote> DeleteVote(long idRetard, long idEleve)
         {
 

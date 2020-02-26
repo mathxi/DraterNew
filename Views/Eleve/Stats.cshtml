@@ -1,4 +1,4 @@
-﻿
+﻿@model DraterNew.Models.Class.Retard
 @{
     ViewBag.Title = "Statistiques utilisateur";
 }
@@ -8,12 +8,22 @@
         <script src="https://d3js.org/d3.v4.js"></script>
 
         <!-- Initialize a select button -->
-        <select id="selectButton"></select>
+        @*<select id="selectButton"></select>*@
+        <div class="input-field col s12">
+            @Html.DropDownList("Retard", null, htmlAttributes: new { @class = "form-control" })
+            @Html.LabelFor(model => model.titre, "Retard", htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
 
         <!-- Create a div where the graph will take place -->
         <div id="my_dataviz"></div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+    </script>
 
     <script>
 

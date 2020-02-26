@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  mer. 26 fév. 2020 à 17:10
+-- Généré le :  mer. 26 fév. 2020 à 17:36
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.3.12
 
@@ -157,9 +157,19 @@ CREATE TABLE IF NOT EXISTS `vote` (
   `dateVote` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `valeur` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idEleve` (`idEleve`),
-  UNIQUE KEY `idRetard` (`idRetard`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `idEleve` (`idEleve`) USING BTREE,
+  KEY `idRetard` (`idRetard`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Déchargement des données de la table `vote`
+--
+
+INSERT INTO `vote` (`id`, `idEleve`, `idRetard`, `dateVote`, `valeur`) VALUES
+(1, 4, 4, '2020-02-26 18:12:11', 1),
+(12, 2, 4, '2020-02-26 18:28:02', 1),
+(16, 2, 17, '2020-02-26 18:28:05', 1),
+(21, 2, 18, '2020-02-26 18:28:07', -1);
 
 --
 -- Contraintes pour les tables déchargées

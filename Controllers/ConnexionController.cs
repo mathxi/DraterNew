@@ -36,7 +36,7 @@ namespace DraterNew.Controllers
             if (Pseudo != null && MDP != null)
             {
                 eleve = EleveRequest.GetEleveByPseudoAndMDP(Pseudo, MDP);
-                if (Convert.ToString(eleve.id) != null)
+                if (eleve != null)
                 {
                     FormsAuthentication.SetAuthCookie(Convert.ToString(eleve.id), true);
                     Session["EleveConnecte"] = eleve;

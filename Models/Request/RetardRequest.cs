@@ -281,7 +281,51 @@ namespace DraterNew.Models.Request
                 }
             }
         }
+        /// <summary>
+        /// Méthode permettant de recuperer un retard.
+        /// </summary>
+        /// <param name="idRetard">Id du retard que l'on souhaite recuperer.</param>
+        /// <returns>Retourne un retard.</returns>
+        public static List<Top100Retard> GetTop100(int idEleve)
+        {
+            List<Top100Retard> liste = new List<Top100Retard>();
+            
+            string query = "SELECT*,((select count(valeur) from vote where idRetard=retardP.id AND valeur=1 )-(select count(valeur) as 'positive value' from vote where idRetard = retardP.id AND valeur = -1 )) as 'FinalValue' FROM retard retardP order by((select count(valeur) from vote where idRetard= retardP.id AND valeur = 1)-(select count(valeur) as 'positive value' from vote where idRetard = retardP.id AND valeur = -1 )) desc";
+
+            // Open connection
+            databaseConnexion connection = new databaseConnexion();
+            if (connection.OpenConnection() == true)
+            {
+                // Create Command
+                using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
+                {
+                    // Create a data reader and Execute the command
+                    using (MySqlDataReader dataReader = cmd.ExecuteReader())
+                    {
+
+                        // Read the data and store them in the list
+                        while (dataReader.Read())
+                        {
+                            Top100Retard retard = new Top100Retard(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), dataReader.GetString(3), dataReader.GetInt32(4),idEleve ,dataReader.GetInt32(5));
+                            liste.Add(retard);
+                        }
+
+                        // close Data Reader
+                        dataReader.Close();
+                    }
+
+                    // close Connection
+                    connection.CloseConnection();
+                }
+
+                // return list to be displayed
+            }
+
+            return liste;
+        }
 
     }
 
 }
+
+

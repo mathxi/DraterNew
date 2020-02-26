@@ -9,11 +9,15 @@ namespace DraterNew.Models.Request
 {
     public class ClasseRequest
     {
+        /// <summary>
+        /// Recupere une classe en fonction de l'id passé en parametre.
+        /// </summary>
+        /// <param name="Id">l'id de la classe que l'on souhaite recuperer.</param>
+        /// <returns>Retourne une classe.</returns>
         public static Classe GetClasse(long Id)
         {
             Classe classe = new Classe();
             string query = "SELECT * FROM Classe where Id=@id;";
-
 
             // Open connection
             databaseConnexion connection = new databaseConnexion();
@@ -48,14 +52,13 @@ namespace DraterNew.Models.Request
         }
 
         /// <summary>
-        /// Recupere toutes les classes présente dans la base de données
+        /// Recupere toutes les classes présente dans la base de données.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Retourne une liste de classe.</returns>
         public static List<Classe> GetAllClasses()
         {
             List<Classe> Listclasse = new List<Classe>();
             string query = "SELECT * FROM Classe;";
-
 
             // Open connection
             databaseConnexion connection = new databaseConnexion();
@@ -90,14 +93,12 @@ namespace DraterNew.Models.Request
         }
 
         /// <summary>
-        /// Méthode permettant la mise a jour d'une classe
+        /// Méthode permettant la mise a jour d'une classe.
         /// </summary>
-        /// <param name="classe">Classe que l'on souhaite mettre a jour</param>
+        /// <param name="classe">Classe que l'on souhaite mettre a jour.</param>
         public static void Update(Classe classe)
         {
-
             string query = "Update Classe set Libelle = @libelle , promo = @promo WHERE Id = @id";
-
 
             // Open connection
             databaseConnexion connection = new databaseConnexion();
@@ -121,12 +122,11 @@ namespace DraterNew.Models.Request
         }
 
         /// <summary>
-        /// Méthode permettant la création d'une classe
+        /// Méthode permettant la création d'une classe.
         /// </summary>
-        /// <param name="classe">Classe que l'on souhaite créer dans la base</param>
+        /// <param name="classe">Classe que l'on souhaite créer dans la base.</param>
         public static void Create(Classe classe)
         {
-
             string query = "INSERT INTO Eleve (Id, Libelle, promo) VALUES (null, @libelle, @promo)";
 
             // Open connection
@@ -136,7 +136,6 @@ namespace DraterNew.Models.Request
                 // Create Command
                 using (MySqlCommand cmd = new MySqlCommand(query, connection.GetConnection()))
                 {
-
                     // shield sql injection
                     cmd.Parameters.AddWithValue("@promo", classe.libelle);
                     cmd.Parameters.AddWithValue("@mail", classe.promo);
@@ -144,15 +143,14 @@ namespace DraterNew.Models.Request
 
                     int result = cmd.ExecuteNonQuery();
                     connection.CloseConnection();
-
                 }
             }
         }
-               
+
         /// <summary>
-        /// Supprime la classe passé en paramètre dans la base de donnée
+        /// Supprime la classe passé en paramètre dans la base de donnée.
         /// </summary>
-        /// <param name="id">L'id de la classe que l'on souhaite supprimer</param>
+        /// <param name="id">L'id de la classe que l'on souhaite supprimer.</param>
         public static void Delete(int id)
         {
             string query = "DELETE FROM Classe WHERE Id = @id";

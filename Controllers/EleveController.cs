@@ -61,7 +61,7 @@ namespace DraterNew.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Eleve/Update/{id}")]
+        [Route("Eleve/Update")]
         public ActionResult Update([Bind(Include = "id,pseudo,mail,mdp,idClasse, Photo_Profile")] Eleve eleve)
         {
             if (ModelState.IsValid)
